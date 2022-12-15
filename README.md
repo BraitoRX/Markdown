@@ -22,6 +22,19 @@ Markdown notes and practice.
 
 En este ejemplo, el flag -v se seguido por la ruta del directorio en la máquina host (/path/on/host) y la ruta del directorio en el contenedor (/path/in/container), separados por dos puntos (:). Esto permite compartir el directorio especificado en la máquina host con el contenedor de Docker.
 
+#### Creación de imágenes
+
+1. Se crea un archivo Dockerfile
+2. Se utiliza el FROM para indicar la imagen base, de la siguiente forma: `FROM ubuntu:latest`.
+
+3. Luego va el comando `RUN touch /ust/src/hola-platzi.txt` (comando a ejecutar en tiempo de build)
+
+4. `docker run -it ubuntu:platzi` (corro el contenedor con la nueva imagen)
+5. `docker login` (me logueo en docker hub)
+6. `docker tag ubuntu:platzi miusuario/ubuntu:platzy`(cambio el tag para poder subirla a mi docker hub)
+7. `docker push miusuario/ubuntu:platzi` (publico la imagen a mi docker hub)
+
+
 
 
 
