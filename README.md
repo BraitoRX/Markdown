@@ -35,6 +35,53 @@ En este ejemplo, el flag -v se seguido por la ruta del directorio en la máquina
 7. `docker push miusuario/ubuntu:platzi` (publico la imagen a mi docker hub)
 
 
+### Uso de imágenes y capas en contenedores
+
+1. Inicialmente se tiene un archivo DockerFile estructurado para que las dependencias se carguen primero que el código dentro del contenedor, esto para aprovechar la caché de docker al momento de hacer una build y aplicacioón de las capas en un ejemplo se puede ver de la siguiente forma:
+```bash
+    FROM node:12
+
+    # Crea un directorio para la aplicación
+    RUN mkdir -p /usr/src/app
+
+    # Establece /usr/src/app como el directorio de trabajo
+    WORKDIR /usr/src/app
+
+    # Instala las dependencias
+    COPY package*.json ./
+    RUN npm install
+
+    # Copia el código de la aplicación
+    COPY . .
+
+    # Expone el puerto 3000
+    EXPOSE 3000
+
+    # Inicia la aplicación
+    CMD [ "npm", "start" ]
+```
+
+2.  Ejecución en modo monitor para archivos de .js en caso de correr alguna aplicación de node:
+    ```bash
+    CMD ["npx", "nodemon", "-L", "index.js"]
+    ```
+3. Esto se complementa con un bind mount para compartir un archivo entre el contenedor y la máquina; especialmente usando -v desde el sitio donde se encuentra el código al sitio donde quedará el código en el interior del contenedor.
+
+```bash
+# Primero, asegúrate de tener el archivo de código que quieres compartir en tu máquina en el directorio deseado.
+# En este ejemplo, asumiremos que el archivo se llama "code.py" y se encuentra en el directorio actual (.).
+
+# A continuación, usa el comando docker run para iniciar un contenedor de Docker y establecer un bind mount para compartir el archivo de código.
+# Usa la opción -v seguida de la ruta al archivo de código en tu máquina y la ruta al directorio donde quieres que aparezca el archivo en el contenedor.
+
+docker run -v $(pwd)/code.py:/app/code.py -it <nombre_de_la_imagen> bash
+
+# En este caso, el archivo de código se compartirá entre tu máquina (en el directorio actual) y el contenedor (en el directorio /app).
+# Cualquier cambio que realices al archivo de código en tu máquina se reflejará en el contenedor y viceversa.
+# También puedes usar esta técnica para compartir otros tipos de archivos, como configuraciones o recursos, entre tu máquina y el contenedor.
+```
+
+
 
 
 
