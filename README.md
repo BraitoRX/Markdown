@@ -81,6 +81,25 @@ docker run -v $(pwd)/code.py:/app/code.py -it <nombre_de_la_imagen> bash
 # También puedes usar esta técnica para compartir otros tipos de archivos, como configuraciones o recursos, entre tu máquina y el contenedor.
 ```
 
+4. Conexión entre contenedores:
+
+    * Docker utiliza redes virtuales para la conexión de sus contenedores.
+
+    * `docker network ls`  es el comando para mirar las redes que hay entre los contenedores.
+
+    * `docker network create --attachable braitoNET`es el comando para crear una red en docker y el attachable es un extra para permitir que otros contenedores se conecten a ella. 
+    * __NOTA__: Es posible ver el estado de las redes con el comando inspect algo tipo: `docker network inspect <nombre_red>`
+
+    *  Con respecto a las conexiones de los contenedores a la red estas se realizan a través del comando docker network connect <nombre de la red> <nombre del contenedor>.
+    ## Comandos:
+    *  docker network ls (listo las redes)
+    *  docker network create --atachable plazinet (creo la red)
+    *  docker inspect plazinet (veo toda la definición de la red creada)
+    *  docker run -d --name db mongo (creo el contenedor de la BBDD)
+    *  docker network connect plazinet db (conecto el contenedor “db” a la red “platzinet”)
+    *  docker run -d -name app -p 3000:3000 --env MONGO_URL=mondodb://db:27017/test platzi (corro el contenedor “app” y le paso una variable)
+    *  docker network connect plazinet app (conecto el contenedor “app” a la red “plazinet”)
+
 
 
 
