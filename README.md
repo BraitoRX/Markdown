@@ -183,4 +183,13 @@ volumes:
 
     > En este caso se escalará el servicio <service_name> a <number_of_instances> instancias.
 
+## Comandos para mantenimientos de docker
+
+* `docker system prune` es el comando para eliminar todos los contenedores que no estén corriendo.
+
+* `docker system prune -a` es el comando para eliminar todos los contenedores que no estén corriendo y todas las imágenes que no estén en uso.
+
+* `docker system df` es el comando para ver el espacio que está ocupando cada contenedor.
+
+
 
